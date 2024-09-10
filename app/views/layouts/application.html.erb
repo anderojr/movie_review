@@ -5,12 +5,40 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
-
   <body>
-    <%= yield %>
+    <!-- 
+    i'm sorry for this ugly code
+    it was necessary to test some things
+    but it will be deleted after i start
+    to do the visuals for movies
+    -->
+    <div class="container">
+      <% if notice %>
+        <article class="message is-info is-small mb-4">
+          <div class="message-header">
+            <p>Info</p>
+            <button class="delete" aria-label="delete" onclick="this.parentElement.parentElement.style.display='none'"></button>
+          </div>
+          <div class="message-body">
+            <%= notice %>
+          </div>
+        </article>
+      <% end %>
+      <% if alert %>
+        <article class="message is-danger is-small mb-4">
+          <div class="message-header">
+            <p>Info</p>
+            <button class="delete" aria-label="delete" onclick="this.parentElement.parentElement.style.display='none'"></button>
+          </div>
+          <div class="message-body">
+            <%= alert %>
+          </div>
+        </article>
+      <% end %>
+      <%= yield %>
+    </div>
   </body>
 </html>

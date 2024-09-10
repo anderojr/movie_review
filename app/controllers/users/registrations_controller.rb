@@ -5,14 +5,14 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # before_action :configure_account_update_params, only: [:update]
 
   # GET /resource/sign_up
-  # def new
-  #   super
-  # end
+  def new
+    redirect_to root_path, alert: 'Only admins can create new accounts'
+  end
 
   # POST /resource
-  # def create
-  #   super
-  # end
+  def create
+    redirect_to root_path, alert: 'Only admins can create new accounts'
+  end
 
   # GET /resource/edit
   # def edit
@@ -37,14 +37,18 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # def cancel
   #   super
   # end
-
   private
 
-  def sign_up_params
-    params.require(:user).permit(:username, :password, :password_confirmation, :first_name, :last_name)
+  def account_update_params
+    original_params = params.require(:user).permit(:username, :password, :password_confirmation, :current_password, :first_name, :last_name)
+    if password_fields_present?(original_params)
+      original_params.merge(valid_password: true)
+    else
+      original_params
+    end
   end
 
-  def account_update_params
-    params.require(:user).permit(:username, :password, :password_confirmation, :current_password, :first_name, :last_name)
+  def password_fields_present?(params)
+    params[:password].present? && params[:password_confirmation].present? && params[:current_password].present?
   end
 end

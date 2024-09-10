@@ -24,4 +24,14 @@ class Users::SessionsController < Devise::SessionsController
   # def configure_sign_in_params
   #   devise_parameter_sanitizer.permit(:sign_in, keys: [:attribute])
   # end
+  def create
+    super do |user|
+      if user && user.new_password_required?
+        # Redirect user to password change
+        redirect_to edit_user_registration_path, alert: 'You need to change your password'
+        return
+      end
+    end
+  end
 end
+
