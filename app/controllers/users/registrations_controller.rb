@@ -40,7 +40,8 @@ class Users::RegistrationsController < Devise::RegistrationsController
   private
 
   def account_update_params
-    original_params = params.require(:user).permit(:username, :password, :password_confirmation, :current_password, :first_name, :last_name)
+    original_params = params.require(:user).permit(:username, :password, :password_confirmation, :current_password,
+                                                   :first_name, :last_name)
     if password_fields_present?(original_params)
       original_params.merge(valid_password: true)
     else

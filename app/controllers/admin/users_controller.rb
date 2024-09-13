@@ -29,7 +29,7 @@ class Admin::UsersController < ApplicationController
       render :edit
     end
   end
-  
+
   private
 
   def user_params
@@ -39,5 +39,4 @@ class Admin::UsersController < ApplicationController
   def authenticate_admin!
     redirect_to root_path, alert: 'Access denied' unless current_user&.admin?
   end
-  
 end

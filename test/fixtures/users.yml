@@ -6,14 +6,14 @@
 #
 admin_user:
   username: nice_admin
-  encrypted_password: password
+  encrypted_password: <%= Devise::Encryptor.digest(User, 'password') %>
   first_name: Admin
   last_name: User
   admin: true
 
 regular_user:
   username: regular_user
-  encrypted_password: password
+  encrypted_password: <%= Devise::Encryptor.digest(User, 'password') %>
   first_name: Regular
   last_name: User
   admin: false
