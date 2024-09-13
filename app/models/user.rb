@@ -2,6 +2,8 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :rememberable, authentication_keys: [:username]
 
+  has_many :movies
+
   before_save :strip_namespaces
 
   validates :username, presence: true, uniqueness: true, length: { minimum: 5, maximum: 24 }
