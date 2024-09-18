@@ -1,6 +1,10 @@
 class Admin::UsersController < ApplicationController
   before_action :authenticate_admin!
 
+  def index
+    @users = User.all
+  end
+
   def new
     @user = User.new
   end
@@ -9,9 +13,9 @@ class Admin::UsersController < ApplicationController
     @user = User.new(user_params)
     @user.valid_password = false
     if @user.save
-      redirect_to root_path, notice: 'User was successfully created'
+      redirect_to admin_users_path, notice: 'User was successfully created'
     else
-      render 'new'
+      render :new, status: :unprocessable_entity
     end
   end
 
@@ -26,14 +30,23 @@ class Admin::UsersController < ApplicationController
     if @user.save
       redirect_to admin_users_path, notice: 'User was successfully updated'
     else
-      render :edit
+      render :edit, status: :unprocessable_entity
+    end
+  end
+
+  def destroy
+    @user = User.find(params[:id])
+    if @user.destroy
+      redirect_to admin_users_path, notice: 'User was successfully deleted'
+    else
+      redirect_to admin_users_path, alert: 'Failed to delete user'
     end
   end
 
   private
 
   def user_params
-    params.require(:user).permit(:username, :password, :password_confirmation, :first_name, :last_name)
+    params.require(:user).permit(:username, :password, :password_confirmation, :first_name, :last_name, :admin)
   end
 
   def authenticate_admin!

@@ -1,0 +1,27 @@
+<section class="section">
+  <h1 class="title mb-5">Users</h1>
+  <table class="table is-striped is-fullwidth">
+    <thead>
+      <tr>
+        <th>Username</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @users.each do |user| %>
+        <tr>
+          <td class="is-vcentered"><%= user.username %></td>
+          <td class="is-vcentered"><%= user.first_name %></td>
+          <td class="is-vcentered"><%= user.last_name %></td>
+          <td class="buttons are-small">
+            <%= link_to 'Edit', edit_admin_user_path(user), class: "button is-info" %>
+            <%= link_to 'Delete', admin_user_path(user), class: "button is-danger", data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <%= link_to "New user", new_admin_user_path, class: "button is-primary mt-5" %>
+</section>

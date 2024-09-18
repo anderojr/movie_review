@@ -1,32 +1,48 @@
-<h1>Create New User</h1>
-
-<%= form_with model: @user, url: admin_users_path, local: true do |f| %>
-  <div class="field">
-    <%= f.label :username %>
-    <%= f.text_field :username %>
-  </div>
-
-  <div class="field">
-    <%= f.label :password %>
-    <%= f.password_field :password %>
-  </div>
-
-  <div class="field">
-    <%= f.label :password_confirmation %>
-    <%= f.password_field :password_confirmation %>
-  </div>
-
-  <div class="field">
-    <%= f.label :first_name %>
-    <%= f.text_field :first_name %>
-  </div>
-
-  <div class="field">
-    <%= f.label :last_name %>
-    <%= f.text_field :last_name %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit "Create User" %>
-  </div>
-<% end %>
+<section class="section">
+  <h1 class="title mb-5">Create New User</h1>
+  <%= form_with model: @user, url: admin_users_path, local: true do |f| %>
+    <% if @user.errors.any? %>
+      <article class="message is-danger mb-3">
+        <div class="message-header">
+          <p><%= pluralize(@user.errors.count, "error") %> prohibited this <%= @user.class.name.downcase %> from being created</p>
+        </div>
+        <div class="message-body">
+          <ul>
+            <% @user.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+      </article>
+    <% end %>
+    <div class="field mb-3">
+      <%= f.label :username, class: "label" %>
+      <%= f.text_field :username, class: "input" %>
+    </div>
+    <div class="field mb-3">
+      <%= f.label :first_name, class: "label" %>
+      <%= f.text_field :first_name, class: "input" %>
+    </div>
+    <div class="field mb-3">
+      <%= f.label :last_name, class: "label" %>
+      <%= f.text_field :last_name, class: "input" %>
+    </div>
+    <div class="field mb-3">
+      <label class="checkbox">
+        <%= f.check_box :admin, class:"checkbox" %>
+        Admin
+      </label>
+    </div>
+    <div class="field mb-3">
+      <%= f.label :password, class: "label" %>
+      <%= f.password_field :password, class: "input" %>
+    </div>
+    <div class="field mb-3">
+      <%= f.label :password_confirmation, class: "label" %>
+      <%= f.password_field :password_confirmation, class: "input" %>
+    </div>
+    <div class="actions">
+      <%= f.submit "Create User", class: "button is-primary" %>
+    </div>
+  <% end %>
+</section>
