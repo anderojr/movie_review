@@ -41,8 +41,13 @@
       <%= f.label :password_confirmation, class: "label" %>
       <%= f.password_field :password_confirmation, class: "input" %>
     </div>
-    <div class="actions">
-      <%= f.submit "Create User", class: "button is-primary" %>
+    <div class="field is-grouped mt-5">
+      <div class="control">
+        <%= f.submit "Create User", class: "button is-primary" %>
+      </div>
+      <div class="control">
+        <%= link_to "Back", admin_users_path, class: "button" %>
+      </div>
     </div>
   <% end %>
 </section>
