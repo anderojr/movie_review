@@ -1,14 +1,32 @@
-<p style="color: green"><%= notice %></p>
-
-<h1>Movies</h1>
-
-<div id="movies">
-  <% @movies.each do |movie| %>
-    <%= render movie %>
-    <p>
-      <%= link_to "Show this movie", movie %>
-    </p>
-  <% end %>
-</div>
-
-<%= link_to "New movie", new_movie_path %>
+<section class="section">
+  <div class="is-flex is-align-items-center is-justify-content-space-between mb-5">
+    <h1 class="title mb-0 mr-4">Movies</h1>
+    <% if user_signed_in? %>
+      <%= link_to 'Add Movie', new_movie_path, class: "button is-primary" %>
+    <% end %>
+  </div>
+  <div id="movies">
+    <div class="columns is-multiline">
+      <% @movies.each do |movie| %>
+        <div class="column is-12-mobile is-6-tablet is-4-desktop is-3-widescreen">
+          <a class="card" href="<%= movie_path(movie) %>" style="display: flex; flex-direction: column; height: 100%;">
+            <div class="card-image">
+              <figure class="image is-3by4">
+                <img src="<%= movie.cover_url %>" alt="<%= movie.title %>" style="object-fit: cover;">
+              </figure>
+            </div>
+            <div class="card-content" style="flex: 1;">
+              <div class="content is-small">
+                <p class="title is-6 mb-1"><%= movie.title %> (<%= movie.year %>)</p>
+                <% if movie.suggested_date %>
+                  <p class="has-text-grey is-size-7 mb-2">Suggested: <%= movie.suggested_date.strftime('%b %d, %Y') %></p>
+                <% end %>
+                <p><%= truncate(movie.summary, length: 100) %></p>
+              </div>
+            </div>
+          </a>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</section>
