@@ -1,52 +1,63 @@
 <%= form_with(model: movie) do |form| %>
   <% if movie.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(movie.errors.count, "error") %> prohibited this movie from being saved:</h2>
-
-      <ul>
-        <% movie.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
-    </div>
+    <article class="message is-danger mb-4">
+      <div class="message-header">
+        <p><%= pluralize(movie.errors.count, "error") %> prohibited this movie from being saved</p>
+      </div>
+      <div class="message-body">
+        <ul>
+          <% movie.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    </article>
   <% end %>
-
-  <div>
-    <%= form.label :title, style: "display: block" %>
-    <%= form.text_field :title %>
-  </div>
-
-  <div>
-    <%= form.label :cover_url, style: "display: block" %>
-    <%= form.text_field :cover_url %>
-  </div>
-
-  <div>
-    <%= form.label :summary, style: "display: block" %>
-    <%= form.text_area :summary %>
-  </div>
-
-  <div>
-    <%= form.label :year, style: "display: block" %>
-    <%= form.number_field :year %>
-  </div>
-
-  <div>
-    <%= form.label :duration, style: "display: block" %>
-    <%= form.number_field :duration %>
-  </div>
-
-  <div>
-    <%= form.label :suggested_date, style: "display: block" %>
-    <%= form.date_field :suggested_date %>
-  </div>
-
-  <div>
-    <%= form.label :user_id, style: "display: block" %>
-    <%= form.text_field :user_id %>
-  </div>
-
-  <div>
-    <%= form.submit %>
+  <div class="box">
+    <div class="field mb-4">
+      <%= form.label :title, class: "label" %>
+      <%= form.text_field :title, class: "input", placeholder: "Movie title" %>
+    </div>
+    <div class="field mb-4">
+      <%= form.label :cover_url, "Cover Image URL", class: "label" %>
+      <%= form.url_field :cover_url, class: "input", placeholder: "https://..." %>
+    </div>
+    <div class="field mb-4">
+      <%= form.label :summary, "Synopsis", class: "label" %>
+      <%= form.text_area :summary, class: "textarea", rows: 4, placeholder: "Brief description of the movie" %>
+    </div>
+    <div class="columns mb-0">
+      <div class="column">
+        <div class="field mb-4">
+          <%= form.label :year, class: "label" %>
+          <%= form.number_field :year, class: "input", placeholder: "e.g. 2024" %>
+        </div>
+      </div>
+      <div class="column">
+        <div class="field mb-4">
+          <%= form.label :duration, class: "label" %>
+          <%= form.number_field :duration, class: "input", placeholder: "e.g. 120" %>
+          <p class="help">Duration in minutes</p>
+        </div>
+      </div>
+    </div>
+    <div class="field mb-4">
+      <%= form.label :suggested_date, "Suggested on", class: "label" %>
+      <%= form.date_field :suggested_date, class: "input" %>
+    </div>
+    <div class="field mb-4">
+      <%= form.label :user_id, "Recommended by", class: "label" %>
+      <div class="select is-fullwidth">
+        <%= form.collection_select :user_id, User.all, :id, :username, { prompt: "Select a user" } %>
+      </div>
+    </div>
+    <div class="field is-grouped mt-5">
+      <div class="control">
+        <%= form.submit class: "button is-primary" %>
+      </div>
+      <div class="control">
+        <%= link_to "Cancel", movie.persisted? ? movie_path(movie) : movies_path, class: "button" %>
+      </div>
+    </div>
   </div>
 <% end %>
