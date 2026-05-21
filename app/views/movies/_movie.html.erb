@@ -1,37 +1,35 @@
 <div id="<%= dom_id movie %>">
-  <p>
-    <strong>Title:</strong>
-    <%= movie.title %>
-  </p>
+  <div class="columns">
+    <div class="column is-narrow">
+      <figure class="image" style="width: 260px;">
+        <img src="<%= movie.cover_url %>" alt="<%= movie.title %>" style="object-fit: cover; border-radius: 6px;">
+      </figure>
+    </div>
 
-  <p>
-    <strong>Cover url:</strong>
-    <%= movie.cover_url %>
-  </p>
+    <div class="column">
+      <h1 class="title mb-1">
+        <%= movie.title %>
+        <span class="has-text-grey-light">(<%= movie.year %>)</span>
+      </h1>
 
-  <p>
-    <strong>Summary:</strong>
-    <%= movie.summary %>
-  </p>
+      <div class="tags mb-4">
+        <% if movie.duration.present? %>
+          <span class="tag is-medium"><%= format_duration(movie.duration) %></span>
+        <% end %>
+        <% if movie.suggested_date.present? %>
+          <span class="tag is-medium">Suggested: <%= movie.suggested_date.strftime('%b %d, %Y') %></span>
+        <% end %>
+        <% if movie.user.present? %>
+          <span class="tag is-medium">Recommended by: <%= movie.user.first_name %> <%= movie.user.last_name %></span>
+        <% end %>
+      </div>
 
-  <p>
-    <strong>Year:</strong>
-    <%= movie.year %>
-  </p>
-
-  <p>
-    <strong>Duration:</strong>
-    <%= movie.duration %>
-  </p>
-
-  <p>
-    <strong>Suggested date:</strong>
-    <%= movie.suggested_date %>
-  </p>
-
-  <p>
-    <strong>User:</strong>
-    <%= movie.user_id %>
-  </p>
-
+      <% if movie.summary.present? %>
+        <h2 class="subtitle is-6 has-text-weight-semibold mb-1">Synopsis</h2>
+        <div class="content">
+          <p><%= movie.summary %></p>
+        </div>
+      <% end %>
+    </div>
+  </div>
 </div>
