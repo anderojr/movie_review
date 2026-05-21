@@ -13,6 +13,10 @@ class User < ApplicationRecord
             format: { with: /\A[a-zA-Z0-9._-]+\z/, message: "can only contain letters, numbers, '.', '_', and '-'" }
   validates :first_name, :last_name, format: { with: /\A[ a-zA-Z]+\z/, message: 'can only contain letters and spaces' }
 
+  def full_name
+    "#{first_name} #{last_name}"
+  end
+
   def new_password_required?
     new_record? || !self[:valid_password]
   end
